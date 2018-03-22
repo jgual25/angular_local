@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Practica-Angular</title>
+</head>
+<body ng-controller="ctrlAlumnes">
+    <!--això permet que sigui angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+    <div class="container"><!-- formulari que inclou les etiquetes amb els inputs corresponents per a poder calcular la quota mensual-->
+        <form method="get" action="3xx Redirection" onsubmit=" return calcular()">
+            <div>
+                <h3>Afegir i eliminar alumnes a una taula amb AngularJS</h3>
+            </div>
+            <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
+                <div>
+                <label for="dni" class="etiqueta">Introduir Document d'Identitat</label>
+                </div>
+                <div class="input">
+                <input type="text" id="dni" required>
+                </div>
+            </div>
+            <div>
+                <div>
+                <label for="nom" class="etiqueta">Introduir Nom de l'alumne</label>
+                </div>
+                <div class="input">
+                <input type="text" id="nom" required>
+                </div><!-- a l'hora d'introduir el capital se l'hi ha aplicat un mínim de 1000 i un màxim d'un milió-->
+            </div>
+            <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
+                <div>
+                <label for="llinatge" class="etiqueta">Introduir cognoms de l'alumne</label>
+                </div>
+                <div class="input">
+                <input type="text" id="llinatg3" required>
+                </div>
+            </div>
+            <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
+                <div>
+                <label for="email" class="etiqueta">Introduir direcció de correu electrònic</label>
+                </div>
+                <div class="input">
+                <input type="email" id="mail" required>
+                </div>
+            </div>
+            <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
+                <div>
+                <label for="nota" class="etiqueta">Introduir nota final</label>
+                </div>
+                <div class="input">
+                <input type="number" id="nota" required>
+                </div>
+            </div>
+            <div>
+                <input type="submit" class="etiqueta" value="Calcular">
+            </div>
+        </form>
+    <div>
+</body>
+</html>
