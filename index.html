@@ -1,65 +1,134 @@
 <!DOCTYPE html>
-<html ng-app lang="en">
+<html ng-app="app1" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
     <title>Practica-Angular</title>
 </head>
 <body ng-controller="ctrlAlumnes">
     <!--això permet que sigui angular -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-
     <div class="container"><!-- formulari que inclou les etiquetes amb els inputs corresponents per a poder calcular la quota mensual-->
-        <form method="get" action="3xx Redirection" onsubmit=" return calcular()">
-            <div>
-                <h3>Afegir i eliminar alumnes a una taula amb AngularJS</h3>
-            </div>
-            <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
+        <div>
+            <h3>Afegir i eliminar alumnes a una taula amb AngularJS</h3>
+        </div>
+        
+        <form ng-submit= "insertar()" class="form-group">
+            <div> 
                 <div>
-                <label for="dni" class="etiqueta">Introduir Document d'Identitat</label>
+                    <label for="dni" class="etiqueta">Introduir Document d'Identitat</label>
                 </div>
                 <div class="input">
-                <input type="text" id="dni" required>
+                    <input type="text" id="dni" ng-model="dni" required>
                 </div>
             </div>
             <div>
                 <div>
-                <label for="nom" class="etiqueta">Introduir Nom de l'alumne</label>
+                    <label for="nom" class="etiqueta">Introduir Nom de l'alumne</label>
                 </div>
                 <div class="input">
-                <input type="text" id="nom" required>
+                    <input type="text" id="nom" ng-model="nom" required>
                 </div><!-- a l'hora d'introduir el capital se l'hi ha aplicat un mínim de 1000 i un màxim d'un milió-->
             </div>
             <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
                 <div>
-                <label for="llinatge" class="etiqueta">Introduir cognoms de l'alumne</label>
+                    <label for="llinatge" class="etiqueta">Introduir cognoms de l'alumne</label>
                 </div>
-                <div class="input">
-                <input type="text" id="llinatg3" required>
-                </div>
-            </div>
-            <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
                 <div>
-                <label for="email" class="etiqueta">Introduir direcció de correu electrònic</label>
+                    <input type="text" id="llinatge" ng-model="llinatge" required>
                 </div>
-                <div class="input">
-                <input type="email" id="mail" required>
-                </div>
-            </div>
             <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
+                    <div>
+                        <label for="email" class="etiqueta">Introduir direcció de correu electrònic</label>
+                    </div>
+                    <div class="input">
+                        <input type="email" id="email" ng-model="email" required>
+                    </div>
+                </div>
+            <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
+                    <div>
+                        <label for="nota">Introduir nota final</label>
+                    </div>
+                    <div>
+                        <input type="number" id="nota" ng-model="nota" required>
+                    </div>
+                </div>
+            <div class="form-control">
                 <div>
-                <label for="nota" class="etiqueta">Introduir nota final</label>
-                </div>
-                <div class="input">
-                <input type="number" id="nota" required>
+                    <button type="submit" class="btn btn-primary">Insertar</button>
                 </div>
             </div>
-            <div>
-                <input type="submit" class="etiqueta" value="Calcular">
-            </div>
-        </form>
-    <div>
-</body>
-</html>
+            </form>
+            
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Dni</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Cognoms</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- per a cada dni dins alumne m'ho repeteixes-->
+                    <tr ng-repeat="persona in alumnes">
+                        <td>{{$index+1}}</td>
+                        <td>{{persona.dni}}</td>
+                        <td>{{persona.nom}}</td>
+                        <td>{{persona.llinatge}}</td>
+                        <td>{{persona.email}}</td>
+                        <td>{{persona.nota}}</td>
+                        <td><button type="button" name="Eliminar" ng-click="eliminar($index)" class="btn btn-danger">Eliminar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+            
+            <script>
+                var app = angular.module('app1',[]);
+                app.controller('ctrlAlumnes', ['$scope', function ($scope) {
+                    $scope.alumnes = [];
+                    $scope.insertar = function(){
+                        if (validar($scope.dni)) {
+                            $scope.alumnes.push({
+                                dni: $scope.dni,
+                                nom: $scope.nom,
+                                llinatge: $scope.llinatge,
+                                email: $scope.email,
+                                nota: $scope.nota
+                            });
+                            $scope.new = {};
+                        }
+                        
+                    }
+                    
+                    $scope.eliminar = function(idx){//li passes per paràmetre l'index que és el que s'agafarà er aliminar files
+                    $scope.alumnes.splice(idx,1);
+                }
+            }]);
+            
+            function validar(dni){
+                //funció que comprova la identifiació.
+                var lletra = dni.substr(dni.length -1).toUpperCase();
+                var numero = dni.substr(0, dni.length - 1);
+                var posicio = "TRWAGMYFPDXBNJZSQVHLCKE".charAt(numero % 23);          
+                
+                if(lletra === posicio){
+                    return true;
+                }else{
+                    alert("Dni no vàlid");
+                    return false;
+                }
+                
+            }
+        </script>
+        
+        <div>
+        </body>
+        </html>
