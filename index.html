@@ -12,17 +12,18 @@
 <body ng-controller="ctrlAlumnes">
     <!--això permet que sigui angular -->
     <div class="container"><!-- formulari que inclou les etiquetes amb els inputs corresponents per a poder calcular la quota mensual-->
-        <div>
+        <div align='center'>
             <h3>Afegir i eliminar alumnes a una taula amb AngularJS</h3>
         </div>
         
         <form ng-submit= "insertar()" class="form-group">
+        <div align="center">
             <div> 
                 <div>
                     <label for="dni" class="etiqueta">Introduir Document d'Identitat</label>
                 </div>
                 <div class="input">
-                    <input type="text" id="dni" ng-model="dni" required>
+                    <input type="text" id="dni" ng-model="alu.dni" required>
                 </div>
             </div>
             <div>
@@ -30,7 +31,7 @@
                     <label for="nom" class="etiqueta">Introduir Nom de l'alumne</label>
                 </div>
                 <div class="input">
-                    <input type="text" id="nom" ng-model="nom" required>
+                    <input type="text" id="nom" ng-model="alu.nom" required>
                 </div><!-- a l'hora d'introduir el capital se l'hi ha aplicat un mínim de 1000 i un màxim d'un milió-->
             </div>
             <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
@@ -38,14 +39,14 @@
                     <label for="llinatge" class="etiqueta">Introduir cognoms de l'alumne</label>
                 </div>
                 <div>
-                    <input type="text" id="llinatge" ng-model="llinatge" required>
+                    <input type="text" id="llinatge" ng-model="alu.llinatge" required>
                 </div>
             <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
                     <div>
                         <label for="email" class="etiqueta">Introduir direcció de correu electrònic</label>
                     </div>
                     <div class="input">
-                        <input type="email" id="email" ng-model="email" required>
+                        <input type="email" id="email" ng-model="alu.email" required>
                     </div>
                 </div>
             <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
@@ -53,15 +54,14 @@
                         <label for="nota">Introduir nota final</label>
                     </div>
                     <div>
-                        <input type="number" id="nota" ng-model="nota" required>
+                        <input type="number" id="nota" ng-model="alu.nota" max="10" min="0" required>
                     </div>
-                </div>
-            <div class="form-control">
+                </div><br>
                 <div>
                     <button type="submit" class="btn btn-primary">Insertar</button>
-                </div>
-            </div>
-            </form>
+                </div><br>
+        </div>
+        </form>
             
             <table class="table table-striped">
                 <thead>
@@ -72,6 +72,7 @@
                         <th scope="col">Cognoms</th>
                         <th scope="col">Email</th>
                         <th scope="col">Nota</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,16 +96,24 @@
                 app.controller('ctrlAlumnes', ['$scope', function ($scope) {
                     $scope.alumnes = [];
                     $scope.insertar = function(){
-                        if (validar($scope.dni)) {
-                            $scope.alumnes.push({
-                                dni: $scope.dni,
-                                nom: $scope.nom,
-                                llinatge: $scope.llinatge,
-                                email: $scope.email,
-                                nota: $scope.nota
-                            });
-                            $scope.new = {};
+                        if (validar($scope.alu.dni)) {
+                            if (!dnirepetit($scope.alu.dni, $scope.alumnes)) {
+                                for(int i=0; i=$scope.alumnes.length; i++){
+                                    if($scope.alu.dni = $scope.alumnes[i]){
+                                        dnirepetit= true;
+                                        $scope.alumnes.push({
+                                            dni: $scope.alu.dni,
+                                            nom: $scope.alu.nom,
+                                            llinatge: $scope.alu.llinatge,
+                                            email: $scope.alu.email,
+                                            nota: $scope.alu.nota
+                                        }); 
+                                    }
+                                }   
+                                
+                            }
                         }
+                        $scope.alu = {};
                         
                     }
                     
@@ -118,13 +127,15 @@
                 var lletra = dni.substr(dni.length -1).toUpperCase();
                 var numero = dni.substr(0, dni.length - 1);
                 var posicio = "TRWAGMYFPDXBNJZSQVHLCKE".charAt(numero % 23);          
-                
+
                 if(lletra === posicio){
                     return true;
                 }else{
                     alert("Dni no vàlid");
                     return false;
                 }
+
+                if (dnirepetit = )
                 
             }
         </script>
