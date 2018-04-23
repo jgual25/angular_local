@@ -18,6 +18,7 @@
         
         <form ng-submit= "insertar()" class="form-group">
         <div align="center">
+            <!-- Cada input s'ha establert com a requerit per a que no es pugui deixar en blanc-->
             <div> 
                 <div>
                     <label for="dni" class="etiqueta">Introduir Document d'Identitat</label>
@@ -32,16 +33,16 @@
                 </div>
                 <div class="input">
                     <input type="text" id="nom" ng-model="alu.nom" required>
-                </div><!-- a l'hora d'introduir el capital se l'hi ha aplicat un mínim de 1000 i un màxim d'un milió-->
+                </div>
             </div>
-            <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
+            <div>
                 <div>
                     <label for="llinatge" class="etiqueta">Introduir cognoms de l'alumne</label>
                 </div>
                 <div>
                     <input type="text" id="llinatge" ng-model="alu.llinatge" required>
                 </div>
-            <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
+            <div>
                     <div>
                         <label for="email" class="etiqueta">Introduir direcció de correu electrònic</label>
                     </div>
@@ -49,7 +50,7 @@
                         <input type="email" id="email" ng-model="alu.email" required>
                     </div>
                 </div>
-            <div><!-- a cada input se l'ha establert com a requerit per a que no es pugui deixar en blanc-->
+            <div>
                     <div>
                         <label for="nota">Introduir nota final</label>
                     </div>
@@ -62,10 +63,9 @@
                 </div><br>
         </div>
         </form>
-            
-            <table class="table table-striped">
-                <thead>
-                    <tr>
+        <table class="table table-striped">
+            <thead>
+                <tr>
                         <th scope="col">#</th>
                         <th scope="col">Dni</th>
                         <th scope="col">Nom</th>
@@ -76,7 +76,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- per a cada dni dins alumne m'ho repeteixes-->
                     <tr ng-repeat="persona in alumnes">
                         <td>{{$index+1}}</td>
                         <td>{{persona.dni}}</td>
@@ -90,17 +89,14 @@
             </table>
             
             <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-            
             <script>
                 var app = angular.module('app1',[]);
                 app.controller('ctrlAlumnes', ['$scope', function ($scope) {
+                    //funció que per als valors de l'scope de la taula, al fer el submit del formulari
+                    //i validat el camp del DNI s'inserten els valors dels inputs a la taula
                     $scope.alumnes = [];
                     $scope.insertar = function(){
                         if (validar($scope.alu.dni)) {
-                            if (!dnirepetit($scope.alu.dni, $scope.alumnes)) {
-                                for(int i=0; i=$scope.alumnes.length; i++){
-                                    if($scope.alu.dni = $scope.alumnes[i]){
-                                        dnirepetit= true;
                                         $scope.alumnes.push({
                                             dni: $scope.alu.dni,
                                             nom: $scope.alu.nom,
@@ -108,22 +104,17 @@
                                             email: $scope.alu.email,
                                             nota: $scope.alu.nota
                                         }); 
-                                    }
                                 }   
-                                
-                            }
                         }
                         $scope.alu = {};
-                        
-                    }
                     
-                    $scope.eliminar = function(idx){//li passes per paràmetre l'index que és el que s'agafarà er aliminar files
+                    $scope.eliminar = function(idx){
+                    //es passa per paràmetre l'index que és el que s'agafarà per eliminar files
                     $scope.alumnes.splice(idx,1);
                 }
-            }]);
-            
+                }]);
             function validar(dni){
-                //funció que comprova la identifiació.
+                //funció que comprova la identifiació introduïda al primer input.
                 var lletra = dni.substr(dni.length -1).toUpperCase();
                 var numero = dni.substr(0, dni.length - 1);
                 var posicio = "TRWAGMYFPDXBNJZSQVHLCKE".charAt(numero % 23);          
@@ -134,12 +125,8 @@
                     alert("Dni no vàlid");
                     return false;
                 }
-
-                if (dnirepetit = )
-                
-            }
-        </script>
-        
+        }
+            </script>
         <div>
         </body>
-        </html>
+ </html>
